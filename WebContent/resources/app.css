@@ -1,0 +1,111 @@
+@CHARSET "ISO-8859-1";
+
+.nextButton { left: 40%;
+position: absolute;
+text-decoration: none;
+font-family: sans-serif;
+font-size: xx-large;
+color: grey;
+}
+
+.status_comment{
+margin-left: 50px;
+    background-color: lightblue;
+    padding: 20px;
+    margin-right: 200px;
+    overflow: auto;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: small;
+    }
+
+.status
+{
+ background-color: gainsboro;
+    font-size: small;
+    font-family: cursive;
+    font-style: normal;
+    border-style: solid;
+    border: black;
+    border-width: 4px;
+    }
+    
+#logout
+{
+left: 90%;
+top: 0px;
+position: absolute;
+text-decoration: none;
+background-color: lightgrey;
+}
+
+#logOut
+{
+text-decoration: none;
+font-family: sans-serif;
+font-size: x-large;
+color: white;
+}
+#LoadingBar
+{
+	width: 100%;
+    height: 100%;
+    background-color: gray;
+    z-index: 2;
+    position: fixed;
+    opacity: 0.2;
+   
+    display: none;
+}
+#errorMessage
+{
+	color: cornsilk;
+    font-family: sans-serif;
+    font-size: x-large;
+    position: absolute;
+    top: 40%;
+    left: 4%;
+}
+#loadingimage
+{
+	height: 100px;
+    width: 100px;
+    left: 50%;
+    position: absolute;
+    bottom: 50%;
+	
+}
+#errors
+{
+width: 100%;
+height: 100%;
+position: fixed; 
+background-color: lightgray; 
+opacity: 0.3; 
+display: none;
+z-index: 10;
+}
+#insideerrors
+{
+	position: absolute; 
+	background-color: black;
+	left: 40%; 
+	width: 400px; 
+	height: 100px; 
+	top: 40%; 
+	display: block;
+	opacity: 10;
+	z-index: 78;
+}
+#closeimg
+{
+	position: absolute; 
+	right: 0px; 
+	top: 0px;
+}
+#statusandcomments
+{
+	left: 20%; 
+	right: 20%; 
+	top: 20%;
+}
