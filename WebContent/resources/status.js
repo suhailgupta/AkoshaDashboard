@@ -41,7 +41,7 @@ function getpagetoken(e){
 				}
 			}
 			commentusingpagetoken(pagetoken,id,page_name);
-
+			hideLoader();
 
 		},
 		error: function(e){  
