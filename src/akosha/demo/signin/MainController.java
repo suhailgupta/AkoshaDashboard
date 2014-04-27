@@ -91,10 +91,26 @@ public class MainController {
 	// this handler is returning view after user logs in successfully
 
 	@RequestMapping(value="/postlogin")
-	public String postlogin(){
+	public String postlogin(HttpServletRequest request, HttpServletResponse response){
 
-		return "postlogin";
+		if(request.getSession().getAttribute("facebook") !=null)
+			return "postlogin";
+		else
+			return "welcome";
 	}
+
+	// to check whether session exists or not .This handler requires for browser back button.
+	// if response sent as notloggedin, then user should be redirected to login page.
+	@RequestMapping(value="/sessioncheck")
+	public @ResponseBody String postloginSessionChecker(HttpServletRequest request, HttpServletResponse response){
+
+		System.out.println(request.getSession().getAttribute("facebook")==null);
+		if(request.getSession().getAttribute("facebook") !=null)
+			return "loggedin";
+		else
+			return "notloggedin";
+	}
+
 
 	// this handler takes care of returning latest posts from facebook.This handler is running every 2 minutes to check
 	//whether there are latest posts are not .If not, it will return empty list and if there are any new feeds published,
@@ -172,7 +188,7 @@ public class MainController {
 			System.out.println(request.getAttribute("nonextpage"));
 			throw e;
 		}
-		
+
 		return feeds;
 
 	}

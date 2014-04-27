@@ -1,5 +1,7 @@
 
 //to show loader
+
+
 function showLoader(){
 
 	document.getElementById('LoadingBar').style.display = 'block';
@@ -13,6 +15,7 @@ function hideLoader()
 }
 
 var page_id="";
+var page_name=undefined;
 //function to get pagetoken for commenting on behalf of page admin
 function getpagetoken(e){
 	var brandname = $('#brand').val();
@@ -28,13 +31,15 @@ function getpagetoken(e){
 			for(var i =0 ; i < jsonpageresponse.data.length; i++){
 
 				if(jsonpageresponse.data[i].id==brandid){
+					page_name=jsonpageresponse.data[i].name;
 					pagetoken=jsonpageresponse.data[i].access_token;
 					break;
 				}else
+				{
 					pagetoken=access_token;
+				}
 			}
-
-			commentusingpagetoken(pagetoken,id);
+			commentusingpagetoken(pagetoken,id,page_name);
 
 			hideLoader();
 		},
@@ -47,10 +52,14 @@ function getpagetoken(e){
 
 }
 //function for commenting on behalf of page admin.
-function commentusingpagetoken(token,e){
+function commentusingpagetoken(token,e,page_name){
 	var id=e;
 	var textid="#text"+id;
 	var comment=$(textid).val();
+	if(page_name==undefined){
+		page_name=facebook_loginname;
+	}
+	var commentsMainDiv=document.getElementById("comments"+id);
 	$.ajax({  
 		type: "POST",  
 		url: "https://graph.facebook.com/"+id+"/comments?access_token=" +token, 
@@ -58,6 +67,21 @@ function commentusingpagetoken(token,e){
 		success: function(response){
 			//	alert("success");
 			//	alert(response.id);
+
+
+			var name=document.createElement('span');
+			name.style.fontWeight='bold';
+			name.appendChild(document.createTextNode(page_name+": "));
+
+			var message=document.createElement('span');
+			message.style.fontStyle='italic';
+			message.appendChild(document.createTextNode(comment));
+			commentDiv=document.createElement('div');
+			commentDiv.className='status_comment';
+
+			commentDiv.appendChild(name);
+			commentDiv.appendChild(message);
+			commentsMainDiv.appendChild(commentDiv);
 			alert("comment posted on facebook");
 		},
 		error: function(e){  
@@ -78,7 +102,7 @@ function getposttimer(){
 	if(stop==undefined)
 	{
 		console.log("Starting Timer");
-		stop= window.setInterval(function(){doAjaxGet(undefined,url);}, 1000*60);
+		stop= window.setInterval(function(){doAjaxGet(undefined,url);}, 1000*60*60);
 	}else
 	{
 		//nothing
@@ -158,11 +182,12 @@ function doAjaxGet(bool,ajaxurl) {
 
 				if(jsonresponse[i].message !=null ){
 
-					statuses += "<br><div class='status'><b>Status</b> : " +"<b>"+jsonresponse[i].from.name +"</b>: "+ jsonresponse[i].message ;
-					statuses+='<br/><b>Comments:</b>';
+					statuses += "<br><div id='status"+jsonresponse[i].id+"' class='status'><b>Status</b> : " +"<b>"+jsonresponse[i].from.name +"</b>: "+ jsonresponse[i].message ;
+					statuses+='<br/><div id=comments'+jsonresponse[i].id+'><b>Comments:</b>';
 
 					for(var j =0 ; j < jsonresponse[i].comments.length ; j++){
 						{
+
 							if(jsonresponse[i].comments[j]!=undefined){
 
 								statuses+="<div class='status_comment'>";
@@ -172,8 +197,9 @@ function doAjaxGet(bool,ajaxurl) {
 							}
 						}
 					}
+
 					//when user will be in comment box to comment on particular status, then timer should be stopped.
-					statuses+="<br><input type='text'id=text"+jsonresponse[i].id+" onfocus=timerstop() onblur=getposttimer()></input></br>";
+					statuses+="</div><br><input type='text'id=text"+jsonresponse[i].id+" onfocus=timerstop() onblur=getposttimer()></input></br>";
 					//textbox for comment on particular status.
 					statuses+="<input type='button' id="+jsonresponse[i].id+" value='Addcomments' onclick=getpagetoken(this);></input></div>";
 
