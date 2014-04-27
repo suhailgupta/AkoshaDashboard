@@ -14,14 +14,16 @@ function hideLoader()
 	document.getElementById('LoadingBar').style.display = 'none';
 }
 
-var page_id="";
+var page_id=undefined;
 var page_name=undefined;
 var pagetoken=undefined;
 //function to get pagetoken for commenting on behalf of page admin
 function getpagetoken(e){
 	var brandname = $('#brand').val();
 	var id=e.id;
+	if(page_id!=undefined)
 	var brandid=page_id;	
+	
 	$.ajax({  
 		type: "GET",  
 		url:"https://graph.facebook.com/"+ facebook_id+"/accounts?access_token="+access_token,
@@ -37,8 +39,10 @@ function getpagetoken(e){
 					break;
 				}else
 				{
-					pagetoken=access_token;
+					continue;
+					
 				}
+				
 			}
 			commentusingpagetoken(pagetoken,id,page_name);
 			hideLoader();
@@ -60,6 +64,8 @@ function commentusingpagetoken(token,e,page_name2){
 	if(page_name2==undefined){
 		page_name2=facebook_loginname;
 	}
+	if(token==undefined)
+		token=access_token;
 	var commentsMainDiv=document.getElementById("comments"+id);
 	$.ajax({  
 		type: "POST",  
@@ -172,7 +178,7 @@ function doAjaxGet(bool,ajaxurl) {
 			//first feed to take page id.	
 			if(jsonresponse[0] !=undefined){
 				if(jsonresponse[0].to[0] !=undefined)
-					pageid=jsonresponse[0].to[0].id;
+					page_id=jsonresponse[0].to[0].id;
 				else
 					page_id=jsonresponse[0].from.id;
 
