@@ -56,7 +56,7 @@ function commentusingpagetoken(token,e){
 		url: "https://graph.facebook.com/"+id+"/comments?access_token=" +token, 
 		data:"message="+comment,
 		success: function(response){
-		//	alert("success");
+			//	alert("success");
 			//	alert(response.id);
 			alert("comment posted on facebook");
 		},
@@ -143,7 +143,8 @@ function doAjaxGet(bool,ajaxurl) {
 			var oldStatuses=statuses.innerHTML;
 			statuses=statuses.innerHTML;
 			statuses="";
-
+//			this check is to take page id for particular page.page id will be in every feed . So , i m just checking 
+			//first feed to take page id.	
 			if(jsonresponse[0] !=undefined){
 				if(jsonresponse[0].to[0] !=undefined)
 					pageid=jsonresponse[0].to[0].id;
@@ -171,7 +172,9 @@ function doAjaxGet(bool,ajaxurl) {
 							}
 						}
 					}
+					//when user will be in comment box to comment on particular status, then timer should be stopped.
 					statuses+="<br><input type='text'id=text"+jsonresponse[i].id+" onfocus=timerstop() onblur=getposttimer()></input></br>";
+					//textbox for comment on particular status.
 					statuses+="<input type='button' id="+jsonresponse[i].id+" value='Addcomments' onclick=getpagetoken(this);></input></div>";
 
 				}
