@@ -16,6 +16,7 @@ function hideLoader()
 
 var page_id="";
 var page_name=undefined;
+var pagetoken=undefined;
 //function to get pagetoken for commenting on behalf of page admin
 function getpagetoken(e){
 	var brandname = $('#brand').val();
@@ -41,7 +42,7 @@ function getpagetoken(e){
 			}
 			commentusingpagetoken(pagetoken,id,page_name);
 
-			hideLoader();
+
 		},
 		error: function(e){  
 
@@ -52,12 +53,12 @@ function getpagetoken(e){
 
 }
 //function for commenting on behalf of page admin.
-function commentusingpagetoken(token,e,page_name){
+function commentusingpagetoken(token,e,page_name2){
 	var id=e;
 	var textid="#text"+id;
 	var comment=$(textid).val();
-	if(page_name==undefined){
-		page_name=facebook_loginname;
+	if(page_name2==undefined){
+		page_name2=facebook_loginname;
 	}
 	var commentsMainDiv=document.getElementById("comments"+id);
 	$.ajax({  
@@ -71,7 +72,7 @@ function commentusingpagetoken(token,e,page_name){
 
 			var name=document.createElement('span');
 			name.style.fontWeight='bold';
-			name.appendChild(document.createTextNode(page_name+": "));
+			name.appendChild(document.createTextNode(page_name2+": "));
 
 			var message=document.createElement('span');
 			message.style.fontStyle='italic';
