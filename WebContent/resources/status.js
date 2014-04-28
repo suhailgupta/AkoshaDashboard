@@ -1,4 +1,3 @@
-
 //to show loader
 
 
@@ -109,7 +108,7 @@ function getposttimer(){
 	if(stop==undefined)
 	{
 		console.log("Starting Timer");
-		stop= window.setInterval(function(){doAjaxGet(undefined,url);}, 1000*60*60);
+		stop= window.setInterval(function(){doAjaxGet(undefined,url);}, 1000*60*2);
 	}else
 	{
 		//nothing
