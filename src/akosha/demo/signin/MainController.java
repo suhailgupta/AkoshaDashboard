@@ -119,7 +119,7 @@ public class MainController {
 	public @ResponseBody ResponseList<Post> getlatestposts(@RequestParam boolean next,@RequestParam String name,HttpServletRequest request, HttpServletResponse response) throws FacebookException {
 		Facebook facebook = (Facebook) request.getSession().getAttribute("facebook");
 		//getting facebook page id
-		String feed_id=facebook.getPage(name).getId();
+		
 		FacebookInf finf=new FacebookInfImpl();
 		//calling service layer method ot get new feeds for the same page.
 		//this method will run every 2 minutes.		
